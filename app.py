@@ -1,5 +1,6 @@
 from broker.upstox.client import UpstoxBroker
 from utils.dataframe import candles_to_dataframe
+from indicators.ema import ema
 
 def main():
 
@@ -16,8 +17,15 @@ def main():
 
     df = candles_to_dataframe(candles)
 
+    df = candles_to_dataframe(candles)
+
+    df["EMA9"] = ema(df["close"], 9)
+    df["EMA21"] = ema(df["close"], 21)
+
+    print(df[["datetime", "close", "EMA9", "EMA21"]].tail(10))
+
     print(df)
-    print(df.info())
+    #print(df.info())
 
 
 if __name__ == "__main__":
