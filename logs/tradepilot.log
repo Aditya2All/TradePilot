@@ -15,3 +15,17 @@
 2026-07-17 00:23:48.903 | INFO     | __main__:main:8 - Running in paper mode
 2026-07-17 00:23:48.903 | INFO     | broker.upstox.auth:__init__:12 - UpstoxAuth initialized
 2026-07-17 00:23:48.903 | INFO     | broker.upstox.auth:login:15 - Login process will start here.
+2026-07-17 00:35:11.405 | INFO     | broker.upstox.auth:open_login:21 - Opening browser: https://api.upstox.com/v2/login/authorization/dialog?response_type=code&client_id=49dedf52-de52-45a9-987a-9de4dfca452e&redirect_uri=http://127.0.0.1:5000/callback
+2026-07-17 00:46:21.973 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-17 00:46:57.773 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: oPcnWI
+2026-07-17 00:46:57.773 | INFO     | broker.upstox.auth:login:71 - Authorization code captured successfully.
+2026-07-17 00:53:43.607 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-17 00:53:50.031 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: TSQpIV
+2026-07-17 00:53:50.031 | INFO     | broker.upstox.auth:login:71 - Authorization code captured.
+2026-07-17 00:53:50.776 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
+2026-07-17 01:00:42.042 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-17 01:00:48.027 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: 1aVS5v
+2026-07-17 01:00:48.028 | INFO     | broker.upstox.auth:login:71 - Authorization code captured.
+2026-07-17 01:00:48.756 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
+2026-07-17 01:00:48.760 | INFO     | broker.upstox.client:authenticate:18 - Authentication successful.
+2026-07-17 01:00:49.378 | INFO     | __main__:main:13 - Connected Successfully
