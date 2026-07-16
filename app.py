@@ -1,13 +1,14 @@
+from broker.upstox.client import UpstoxBroker
 from config.settings import settings
 from core.logger import logger
 
 
-def main() -> None:
-    logger.info("====================================")
+def main():
     logger.info("TradePilot starting...")
-    logger.info(f"Mode: {settings.trading_mode}")
-    logger.info("Configuration loaded")
-    logger.info("====================================")
+    logger.info(f"Running in {settings.trading_mode} mode")
+
+    broker = UpstoxBroker()
+    broker.authenticate()
 
 
 if __name__ == "__main__":
