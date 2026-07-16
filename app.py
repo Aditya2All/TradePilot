@@ -1,6 +1,5 @@
 from broker.upstox.client import UpstoxBroker
-from core.logger import logger
-
+from utils.dataframe import candles_to_dataframe
 
 def main():
 
@@ -8,13 +7,17 @@ def main():
 
     broker.authenticate()
 
-    profile = broker.get_profile()
+    candles = broker.get_historical_data(
+        instrument_key="NSE_EQ|INE002A01018",
+        interval="day",
+        from_date="2026-07-01",
+        to_date="2026-07-17",
+    )
 
-    logger.info("Connected Successfully")
+    df = candles_to_dataframe(candles)
 
-    print("\n========== PROFILE ==========\n")
-
-    print(profile)
+    print(df)
+    print(df.info())
 
 
 if __name__ == "__main__":
