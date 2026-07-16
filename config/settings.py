@@ -1,17 +1,16 @@
 from dataclasses import dataclass
-import os
-
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
 
 @dataclass(frozen=True)
 class Settings:
-    api_key: str = os.getenv("UPSTOX_API_KEY", "")
-    api_secret: str = os.getenv("UPSTOX_API_SECRET", "")
-    redirect_uri: str = os.getenv("REDIRECT_URI", "")
-    access_token: str = os.getenv("ACCESS_TOKEN", "")
+    upstox_api_key: str = os.getenv("UPSTOX_API_KEY", "")
+    upstox_api_secret: str = os.getenv("UPSTOX_API_SECRET", "")
+    upstox_redirect_uri: str = os.getenv("UPSTOX_REDIRECT_URI", "")
+
     trading_mode: str = os.getenv("TRADING_MODE", "paper")
     log_level: str = os.getenv("LOG_LEVEL", "INFO")
 
