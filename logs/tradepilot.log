@@ -72,3 +72,9 @@
 2026-07-17 22:53:10.366 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
 2026-07-17 22:53:10.368 | INFO     | broker.upstox.client:authenticate:27 - Authentication successful.
 2026-07-17 22:53:10.368 | INFO     | broker.upstox.rest_client:get:19 - GET https://api.upstox.com/v2/historical-candle/NSE_EQ|INE002A01018/day/2026-07-17/2026-07-01
+2026-07-17 23:33:29.565 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-17 23:33:36.674 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: 58nL3k
+2026-07-17 23:33:36.674 | INFO     | broker.upstox.auth:login:71 - Authorization code captured.
+2026-07-17 23:33:37.857 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
+2026-07-17 23:33:37.864 | INFO     | broker.upstox.client:authenticate:27 - Authentication successful.
+2026-07-17 23:33:37.865 | INFO     | broker.upstox.rest_client:get:19 - GET https://api.upstox.com/v2/historical-candle/NSE_EQ|INE002A01018/day/2026-07-17/2026-05-18

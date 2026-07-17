@@ -1,3 +1,17 @@
+from config.trading import (
+    SYMBOL,
+    INSTRUMENT_KEY,
+    TIMEFRAME,
+    EMA_FAST,
+    EMA_SLOW,
+    INITIAL_CAPITAL,
+    DEFAULT_QUANTITY,
+    LOOKBACK_DAYS,
+)
+
+from datetime import date, timedelta
+
+
 from broker.upstox.client import UpstoxBroker
 from utils.dataframe import candles_to_dataframe
 from indicators.ema import ema
@@ -10,7 +24,9 @@ class TradingEngine:
     def __init__(self):
         self.broker = UpstoxBroker()
         self.strategy = EMACrossoverStrategy()
-        self.paper_trader = PaperTrader(initial_capital=100000)
+        self.paper_trader = PaperTrader(
+            initial_capital=INITIAL_CAPITAL
+        )
 
     def run(self):
 
@@ -20,19 +36,22 @@ class TradingEngine:
         self.broker.authenticate()
 
         # Fetch Historical Data
+        today = date.today()
+        from_date = today - timedelta(days=LOOKBACK_DAYS)
+
         candles = self.broker.get_historical_data(
-            instrument_key="NSE_EQ|INE002A01018",
-            interval="day",
-            from_date="2026-07-01",
-            to_date="2026-07-17",
+            instrument_key=INSTRUMENT_KEY,
+            interval=TIMEFRAME,
+            from_date=str(from_date),
+            to_date=str(today),
         )
 
         # Convert to DataFrame
         df = candles_to_dataframe(candles)
 
         # Calculate Indicators
-        df["EMA9"] = ema(df["close"], 9)
-        df["EMA21"] = ema(df["close"], 21)
+        df[f"EMA{EMA_FAST}"] = ema(df["close"], EMA_FAST)
+        df[f"EMA{EMA_SLOW}"] = ema(df["close"], EMA_SLOW)
 
         # Generate Signal
         signal = self.strategy.generate_signal(df)
@@ -45,9 +64,9 @@ class TradingEngine:
         # Execute Paper Trade
         if signal == "BUY":
             self.paper_trader.buy(
-                symbol="RELIANCE",
+                symbol=SYMBOL,
                 price=latest_price,
-                quantity=10,
+                quantity=DEFAULT_QUANTITY,
             )
 
         elif signal == "SELL":
