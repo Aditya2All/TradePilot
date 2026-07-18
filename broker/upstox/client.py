@@ -5,9 +5,9 @@ from broker.upstox.auth import UpstoxAuth
 from core.logger import logger
 from broker.upstox.rest_client import RestClient
 from broker.upstox.market_data import MarketData
-#from broker.upstox.instrument_manager import InstrumentManager
+from broker.upstox.instrument_manager import InstrumentManager
 from broker.upstox.history import History
-
+from broker.upstox.websocket_client import UpstoxWebSocket
 
 class UpstoxBroker(Broker):
 
@@ -15,8 +15,8 @@ class UpstoxBroker(Broker):
 
     def __init__(self):
         self.auth = UpstoxAuth()
-        #self.instrument_manager = InstrumentManager()
-        #self.instrument_manager.load()
+        self.instrument_manager = InstrumentManager()
+        self.instrument_manager.load()
         self.access_token = None
 
     def authenticate(self):
@@ -24,6 +24,7 @@ class UpstoxBroker(Broker):
         self.rest = RestClient(self.access_token)
         self.market_data = MarketData(self.rest)
         self.history = History(self.rest)
+        self.websocket = UpstoxWebSocket(self.access_token)
         logger.info("Authentication successful.")
 
     def get_profile(self):
@@ -38,6 +39,16 @@ class UpstoxBroker(Broker):
     def get_ltp(self, instrument_key: str):
         return self.market_data.get_ltp(instrument_key)
     
+    def start_market_stream(self, instrument_key: str):
+        self.websocket.connect(instrument_key)
+
+    def get_instrument_key(self, symbol: str):
+        return self.instrument_manager.get_instrument_key(symbol)
+    
+    def create_websocket(self):
+        return UpstoxWebSocket(self.access_token)
+    
+
    # def get_ltp_by_symbol(self, symbol: str):
 
     #    instrument_key = self.instrument_manager.get_instrument_key(symbol)

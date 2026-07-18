@@ -2,5 +2,8 @@
 Broker configuration
 """
 
-BROKER_NAME = "upstox"
-API_VERSION = "v2"
+# Official Upstox Complete Instrument Master (BOD)
+
+INSTRUMENT_MASTER_URL = (
+    "https://assets.upstox.com/market-quote/instruments/exchange/complete.json.gz"
+)

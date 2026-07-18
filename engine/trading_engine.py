@@ -17,18 +17,48 @@ from utils.dataframe import candles_to_dataframe
 from indicators.ema import ema
 from strategy.ema_crossover import EMACrossoverStrategy
 from engine.paper_trader import PaperTrader
+from services.market_data_service import MarketDataService
 
 
 class TradingEngine:
 
     def __init__(self):
+
+        self.websocket = None
+
+        self.market_data = MarketDataService()
+
+        self.market_data.on_candle = self.on_new_candle
+
         self.broker = UpstoxBroker()
         self.strategy = EMACrossoverStrategy()
         self.paper_trader = PaperTrader(
             initial_capital=INITIAL_CAPITAL
         )
+    
+    def start_live_feed(self):
 
-    def run(self):
+        instrument_key = self.broker.get_instrument_key(SYMBOL)
+
+        self.websocket = self.broker.create_websocket()
+
+        self.websocket.connect(
+            instrument_key,
+            self.on_tick,
+        )
+
+    def on_tick(self, message):
+
+        print("\n========== LIVE TICK ==========")
+        self.market_data.process_tick(message)
+
+    def on_new_candle(self, candle):
+
+        print("\n========== NEW 5-MIN CANDLE ==========")
+
+        print(candle)
+
+    def run_cycle(self):
 
         print("\n========== STARTING TRADEPILOT ==========\n")
 

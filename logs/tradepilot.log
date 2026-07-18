@@ -78,3 +78,38 @@
 2026-07-17 23:33:37.857 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
 2026-07-17 23:33:37.864 | INFO     | broker.upstox.client:authenticate:27 - Authentication successful.
 2026-07-17 23:33:37.865 | INFO     | broker.upstox.rest_client:get:19 - GET https://api.upstox.com/v2/historical-candle/NSE_EQ|INE002A01018/day/2026-07-17/2026-05-18
+2026-07-18 00:32:54.149 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-18 00:33:01.296 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: 6IkJBD
+2026-07-18 00:33:01.296 | INFO     | broker.upstox.auth:login:71 - Authorization code captured.
+2026-07-18 00:33:02.479 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
+2026-07-18 00:33:02.659 | INFO     | broker.upstox.client:authenticate:29 - Authentication successful.
+2026-07-18 00:33:03.826 | INFO     | broker.upstox.websocket_client:on_open:22 - WebSocket Connected
+2026-07-18 00:50:43.525 | ERROR    | broker.upstox.websocket_client:on_error:33 - Connection to remote host was lost.
+2026-07-18 00:50:43.527 | ERROR    | broker.upstox.websocket_client:on_error:33 - UpstoxWebSocket.connect.<locals>.on_close() takes 0 positional arguments but 2 were given
+2026-07-18 01:48:12.808 | INFO     | broker.upstox.instrument_manager:download:25 - Downloading instrument master...
+2026-07-18 01:53:04.007 | INFO     | broker.upstox.instrument_manager:download:25 - Downloading instrument master...
+2026-07-18 02:04:17.980 | INFO     | broker.upstox.instrument_manager:download:28 - Downloading instrument master...
+2026-07-18 02:07:43.263 | INFO     | broker.upstox.instrument_manager:download:28 - Downloading instrument master...
+2026-07-18 02:07:44.703 | INFO     | broker.upstox.instrument_manager:download:39 - Instrument master downloaded.
+2026-07-18 02:07:44.703 | INFO     | broker.upstox.instrument_manager:extract:95 - Extracting instrument master...
+2026-07-18 02:07:44.936 | INFO     | broker.upstox.instrument_manager:extract:102 - Extraction complete.
+2026-07-18 02:07:44.952 | INFO     | broker.upstox.instrument_manager:load:48 - Loading instruments...
+2026-07-18 02:07:45.771 | INFO     | broker.upstox.instrument_manager:load:64 - Loaded 131676 instruments.
+2026-07-18 12:37:26.920 | INFO     | broker.upstox.instrument_manager:load:48 - Loading instruments...
+2026-07-18 12:37:27.792 | INFO     | broker.upstox.instrument_manager:load:64 - Loaded 131676 instruments.
+2026-07-18 12:37:27.809 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-18 12:37:35.826 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: VlS-gY
+2026-07-18 12:37:35.826 | INFO     | broker.upstox.auth:login:71 - Authorization code captured.
+2026-07-18 12:37:37.091 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
+2026-07-18 12:37:37.127 | INFO     | broker.upstox.client:authenticate:28 - Authentication successful.
+2026-07-18 12:37:37.659 | INFO     | broker.upstox.websocket_client:on_open:22 - WebSocket Connected
+2026-07-18 12:50:03.005 | INFO     | broker.upstox.instrument_manager:load:48 - Loading instruments...
+2026-07-18 12:50:03.754 | INFO     | broker.upstox.instrument_manager:load:64 - Loaded 131676 instruments.
+2026-07-18 12:50:03.763 | INFO     | broker.upstox.auth:login:64 - Opening Upstox Login Page...
+2026-07-18 12:50:10.569 | INFO     | broker.upstox.auth:callback:28 - Authorization Code Received: jIiBv4
+2026-07-18 12:50:10.569 | INFO     | broker.upstox.auth:login:71 - Authorization code captured.
+2026-07-18 12:50:11.642 | INFO     | broker.upstox.auth:login:99 - Access Token generated successfully.
+2026-07-18 12:50:11.672 | INFO     | broker.upstox.client:authenticate:28 - Authentication successful.
+2026-07-18 12:50:12.175 | INFO     | broker.upstox.websocket_client:on_open:22 - WebSocket Connected
+2026-07-18 12:54:37.253 | INFO     | services.market_data_service:process_tick:42 - Completed Candle : Candle(start_time=datetime.datetime(2026, 7, 18, 9, 15), open=100.0, high=100.5, low=100.0, close=100.4, volume=0)
+2026-07-18 12:54:37.254 | INFO     | services.market_data_service:process_tick:42 - Completed Candle : Candle(start_time=datetime.datetime(2026, 7, 18, 9, 20), open=100.8, high=101.1, low=100.6, close=101.0, volume=0)

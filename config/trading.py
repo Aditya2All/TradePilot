@@ -19,3 +19,9 @@ EMA_SLOW = 21
 # Trading
 INITIAL_CAPITAL = 100000
 DEFAULT_QUANTITY = 10
+
+# Scheduler interval
+# Development = 15
+# Live 5-minute trading = 300
+
+SCHEDULER_INTERVAL_SECONDS = 15
