@@ -19,6 +19,7 @@ from strategy.ema_crossover import EMACrossoverStrategy
 from engine.paper_trader import PaperTrader
 from services.market_data_service import MarketDataService
 from services.candle_store import CandleStore
+from services.candle_builder import Candle
 
 
 class TradingEngine:
@@ -49,6 +50,52 @@ class TradingEngine:
             self.on_tick,
         )
 
+    def bootstrap_history(self):
+
+        print("Loading historical candles...")
+
+        today = date.today()
+        from_date = today - timedelta(days=LOOKBACK_DAYS)
+
+        candles = self.broker.get_historical_data(
+            instrument_key=INSTRUMENT_KEY,
+            interval=TIMEFRAME,
+            from_date=str(from_date),
+            to_date=str(today),
+        )
+
+        df = candles_to_dataframe(candles)
+
+        for _, row in df.iterrows():
+
+            candle = Candle(
+                start_time=row["datetime"],
+                open=float(row["open"]),
+                high=float(row["high"]),
+                low=float(row["low"]),
+                close=float(row["close"]),
+                volume=int(row["volume"]),
+            )
+
+            self.candle_store.add(candle)
+
+        print(
+            f"Loaded {self.candle_store.size()} historical candles."
+        )
+
+    def run(self):
+
+        print("\n========== STARTING TRADEPILOT ==========\n")
+
+        # Authenticate
+        self.broker.authenticate()
+
+        # Load historical candles into CandleStore
+        self.bootstrap_history()
+
+        # Start live market feed
+        self.start_live_feed()
+
     def on_tick(self, message):
 
         print("\n========== LIVE TICK ==========")
@@ -61,14 +108,6 @@ class TradingEngine:
         print("\n========== NEW CANDLE ==========")
         print(candle)
 
-        # Wait until we have enough candles
-        if self.candle_store.size() < EMA_SLOW + 5:
-            print(
-                f"Waiting for more candles "
-                f"({self.candle_store.size()}/{EMA_SLOW + 5})"
-            )
-            return
-
         df = self.candle_store.to_dataframe()
 
         df[f"EMA{EMA_FAST}"] = ema(df["close"], EMA_FAST)
@@ -79,43 +118,9 @@ class TradingEngine:
         latest_price = float(df.iloc[-1]["close"])
 
         print("\n========== STRATEGY ==========")
-        print(f"Price  : {latest_price}")
+        print(f"Price  : ₹{latest_price:.2f}")
         print(f"Signal : {signal}")
-        
-    def run_cycle(self):
 
-        print("\n========== STARTING TRADEPILOT ==========\n")
-
-        # Authenticate
-        self.broker.authenticate()
-
-        # Fetch Historical Data
-        today = date.today()
-        from_date = today - timedelta(days=LOOKBACK_DAYS)
-
-        candles = self.broker.get_historical_data(
-            instrument_key=INSTRUMENT_KEY,
-            interval=TIMEFRAME,
-            from_date=str(from_date),
-            to_date=str(today),
-        )
-
-        # Convert to DataFrame
-        df = candles_to_dataframe(candles)
-
-        # Calculate Indicators
-        df[f"EMA{EMA_FAST}"] = ema(df["close"], EMA_FAST)
-        df[f"EMA{EMA_SLOW}"] = ema(df["close"], EMA_SLOW)
-
-        # Generate Signal
-        signal = self.strategy.generate_signal(df)
-
-        latest_price = float(df.iloc[-1]["close"])
-
-        print(f"\nSignal : {signal}")
-        print(f"Price  : ₹{latest_price}")
-
-        # Execute Paper Trade
         if signal == "BUY":
             self.paper_trader.buy(
                 symbol=SYMBOL,
@@ -129,3 +134,4 @@ class TradingEngine:
             )
 
         self.paper_trader.summary()
+        

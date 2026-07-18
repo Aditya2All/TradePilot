@@ -1,10 +1,9 @@
-from services.scheduler import Scheduler
+from engine.trading_engine import TradingEngine
+
 
 def main():
-
-    scheduler = Scheduler()
-
-    scheduler.start()
+    engine = TradingEngine()
+    engine.run()
 
 
 if __name__ == "__main__":
