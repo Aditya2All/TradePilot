@@ -18,6 +18,7 @@ from indicators.ema import ema
 from strategy.ema_crossover import EMACrossoverStrategy
 from engine.paper_trader import PaperTrader
 from services.market_data_service import MarketDataService
+from services.candle_store import CandleStore
 
 
 class TradingEngine:
@@ -26,6 +27,7 @@ class TradingEngine:
 
         self.websocket = None
 
+        self.candle_store = CandleStore()
         self.market_data = MarketDataService()
 
         self.market_data.on_candle = self.on_new_candle
@@ -54,10 +56,32 @@ class TradingEngine:
 
     def on_new_candle(self, candle):
 
-        print("\n========== NEW 5-MIN CANDLE ==========")
+        self.candle_store.add(candle)
 
+        print("\n========== NEW CANDLE ==========")
         print(candle)
 
+        # Wait until we have enough candles
+        if self.candle_store.size() < EMA_SLOW + 5:
+            print(
+                f"Waiting for more candles "
+                f"({self.candle_store.size()}/{EMA_SLOW + 5})"
+            )
+            return
+
+        df = self.candle_store.to_dataframe()
+
+        df[f"EMA{EMA_FAST}"] = ema(df["close"], EMA_FAST)
+        df[f"EMA{EMA_SLOW}"] = ema(df["close"], EMA_SLOW)
+
+        signal = self.strategy.generate_signal(df)
+
+        latest_price = float(df.iloc[-1]["close"])
+
+        print("\n========== STRATEGY ==========")
+        print(f"Price  : {latest_price}")
+        print(f"Signal : {signal}")
+        
     def run_cycle(self):
 
         print("\n========== STARTING TRADEPILOT ==========\n")

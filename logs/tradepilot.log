@@ -113,3 +113,5 @@
 2026-07-18 12:50:12.175 | INFO     | broker.upstox.websocket_client:on_open:22 - WebSocket Connected
 2026-07-18 12:54:37.253 | INFO     | services.market_data_service:process_tick:42 - Completed Candle : Candle(start_time=datetime.datetime(2026, 7, 18, 9, 15), open=100.0, high=100.5, low=100.0, close=100.4, volume=0)
 2026-07-18 12:54:37.254 | INFO     | services.market_data_service:process_tick:42 - Completed Candle : Candle(start_time=datetime.datetime(2026, 7, 18, 9, 20), open=100.8, high=101.1, low=100.6, close=101.0, volume=0)
+2026-07-18 13:07:09.321 | INFO     | services.market_data_service:process_tick:42 - Completed Candle : Candle(start_time=datetime.datetime(2026, 7, 18, 9, 15), open=100.0, high=100.5, low=100.0, close=100.4, volume=0)
+2026-07-18 13:07:09.322 | INFO     | services.market_data_service:process_tick:42 - Completed Candle : Candle(start_time=datetime.datetime(2026, 7, 18, 9, 20), open=100.8, high=101.1, low=100.6, close=101.0, volume=0)
